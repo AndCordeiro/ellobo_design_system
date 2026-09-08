@@ -96,7 +96,7 @@ export function SegmentedControl<T extends string | number>({
                 justifyContent: 'center',
                 gap: theme.spacing.xs,
                 paddingHorizontal: theme.spacing.sm,
-                borderRadius: theme.radius.md - theme.spacing.xs,
+                borderRadius: Math.max(0, theme.radius.md - theme.spacing.xs),
                 backgroundColor: selected ? theme.colors.background.elevated : 'transparent',
                 opacity: pressed && !selected && !optionDisabled ? theme.opacity.pressed : 1,
               },

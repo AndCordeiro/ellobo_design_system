@@ -23,7 +23,6 @@ export function SpacingScreen() {
               <Box
                 height={16}
                 width={Math.max(theme.spacing[alias], 2)}
-                background="brandSubtle"
                 borderRadius="xs"
                 style={{ backgroundColor: theme.colors.action.primary }}
               />

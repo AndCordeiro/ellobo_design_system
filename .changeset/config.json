@@ -1,6 +1,11 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "AndCordeiro/ellobo_design_system" }],
+  "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "AndCordeiro/ellobo_design_system"
+    }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],

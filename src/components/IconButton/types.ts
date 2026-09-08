@@ -14,7 +14,7 @@ export interface IconButtonProps extends Omit<
   accessibilityLabel: string;
   /** Visual variant, coherent with `Button`. Defaults to `ghost`. */
   variant?: ButtonVariant;
-  /** `sm` 32, `md` 40, `lg` 48. Defaults to `md`. */
+  /** Same heights as `Button` (`theme.components.button.height`). Defaults to `md`. */
   size?: IconButtonSize;
   /** `circle` (default) or `rounded` (uses the button radius token). */
   shape?: 'circle' | 'rounded';

@@ -4,10 +4,7 @@ import { ActivityIndicator } from '../../feedback/ActivityIndicator/ActivityIndi
 import { Icon } from '../../icons/Icon/Icon';
 import { useTheme } from '../../theme/useTheme';
 import { getButtonStyles } from '../Button/styles';
-import type { IconButtonProps, IconButtonSize } from './types';
-
-const dimensions: Record<IconButtonSize, number> = { sm: 32, md: 40, lg: 48 };
-const iconSizes: Record<IconButtonSize, number> = { sm: 16, md: 20, lg: 24 };
+import type { IconButtonProps } from './types';
 
 /**
  * Icon-only button. Always requires an `accessibilityLabel`.
@@ -32,7 +29,8 @@ export function IconButton({
 }: IconButtonProps) {
   const theme = useTheme();
   const isInteractionBlocked = disabled || loading;
-  const dimension = dimensions[size];
+  // Same height as `Button` for the same size, so both align inside a `Row`.
+  const dimension = theme.components.button.height[size];
 
   const resolveStyle = useCallback(
     ({ pressed }: PressableStateCallbackType) => {
@@ -78,7 +76,7 @@ export function IconButton({
       {loading ? (
         <ActivityIndicator size="sm" color={contentColor} />
       ) : (
-        <Icon name={icon} size={iconSizes[size]} color={contentColor} />
+        <Icon name={icon} size={theme.components.button.iconSize[size] + 2} color={contentColor} />
       )}
     </Pressable>
   );

@@ -244,6 +244,28 @@ npm run example:typecheck
 Open the app in Expo Go from `example:start`, or build a dev client with `example:android` /
 `example:ios`.
 
+### Testing consumer apps with Jest
+
+The package is consumed through its CommonJS build, so it needs no Babel transform in the
+consumer's Jest setup. The peer libraries do, and `react-native-safe-area-context` must be
+mocked:
+
+```js
+// jest.config.js
+module.exports = {
+  preset: '@react-native/jest-preset', // or 'jest-expo'
+  transformIgnorePatterns: [
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|react-native-svg|react-native-safe-area-context)/)',
+  ],
+};
+
+// jest.setup.js
+jest.mock(
+  'react-native-safe-area-context',
+  () => require('react-native-safe-area-context/jest/mock').default,
+);
+```
+
 ## Development
 
 ```bash
@@ -270,20 +292,17 @@ tooling that prefers the `source` condition.
 
 ### Testing the package locally in another app
 
-Option A — link the source (fastest while iterating):
-
-```bash
-# in the consumer app
-npm install ../ellobo_design_system
-```
-
-Option B — test the real tarball exactly as consumers get it:
+Test the real tarball exactly as consumers get it:
 
 ```bash
 npm run build
 npm pack                                  # creates ellobo-design-system-<version>.tgz
 cd ../my-app && npm install ../ellobo_design_system/ellobo-design-system-0.1.0.tgz
 ```
+
+Avoid `npm install ../ellobo_design_system` (symlink): Metro would then resolve React and
+React Native from this repository's `node_modules` and crash with duplicated React instances
+unless you configure `watchFolders`/`blockList` in the consumer app.
 
 Inspect what would be published with `npm pack --dry-run`.
 
@@ -336,7 +355,11 @@ Avoid `npm version`; use Changesets.
   consumed changesets. Review it — the version only becomes official after this PR is merged.
 - When the Version PR is merged, the workflow validates the package again
   (typecheck, lint, test, build), creates the git tag `vX.Y.Z` and the GitHub Release
-  `vX.Y.Z` with the CHANGELOG notes. Any failing validation aborts before tagging.
+  `vX.Y.Z` with the notes extracted from `CHANGELOG.md` (`npm run release:notes`).
+  Any failing validation aborts before tagging.
+
+The workflow needs the repository setting **Settings → Actions → General → "Allow GitHub
+Actions to create and approve pull requests"** enabled, otherwise the Version PR cannot be opened.
 
 Feature merges never create releases by themselves. No automated registry publish is configured.
 
@@ -365,9 +388,10 @@ available on GitHub Packages (scopes must match the owner). To publish there:
    "publishConfig": { "registry": "https://npm.pkg.github.com" }
    ```
 
-3. In `release.yml`, replace `publish: npx changeset tag` with `publish: npm run release` and
-   keep `GITHUB_TOKEN` (it can publish to GitHub Packages for the same repository; a PAT with
-   `write:packages` is only needed for other repositories).
+3. In `release.yml`, add `publish: npm run release` to the `changesets/action` step and keep
+   `GITHUB_TOKEN` (it can publish to GitHub Packages for the same repository; a PAT with
+   `write:packages` is only needed for other repositories). The tag/release step can then be
+   removed, since `changeset publish` creates the tag itself.
 4. Consumers add an `.npmrc` with `@andcordeiro:registry=https://npm.pkg.github.com` and a token
    with `read:packages`.
 

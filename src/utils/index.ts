@@ -1,4 +1,3 @@
-export { deepMerge } from './deepMerge';
 export {
   getElevationStyle,
   getTypographyStyle,
@@ -7,5 +6,6 @@ export {
   resolveTextColor,
   resolveBackgroundColor,
   resolveBorderColor,
+  isTextColorToken,
   type TextColorToken,
 } from './styles';

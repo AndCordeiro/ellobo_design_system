@@ -1,5 +1,5 @@
-import { createContext, useMemo, type ReactNode } from 'react';
-import { useColorScheme } from 'react-native';
+import { createContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { AccessibilityInfo, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'styled-components/native';
 import { defaultDarkTheme } from './dark';
@@ -14,6 +14,8 @@ export interface DesignSystemContextValue {
   mode: ThemeMode;
   /** Preference passed to the provider (`system` resolves to the OS appearance). */
   colorScheme: ColorSchemePreference;
+  /** Whether the OS "Reduce Motion" accessibility setting is enabled. */
+  reducedMotion: boolean;
 }
 
 export const DesignSystemContext = createContext<DesignSystemContextValue | null>(null);
@@ -37,6 +39,35 @@ export interface DesignSystemProviderProps {
   children: ReactNode;
 }
 
+/**
+ * Subscribes once to the OS "Reduce Motion" setting so every animated component can read it
+ * from context instead of registering its own listener.
+ */
+function useReducedMotionSetting(): boolean {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then((enabled) => {
+        if (mounted) {
+          setReduced(enabled);
+        }
+      })
+      .catch(() => undefined);
+
+    const subscription = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduced);
+
+    return () => {
+      mounted = false;
+      subscription.remove();
+    };
+  }, []);
+
+  return reduced;
+}
+
 export function DesignSystemProvider({
   theme,
   lightTheme = defaultLightTheme,
@@ -46,6 +77,7 @@ export function DesignSystemProvider({
   children,
 }: DesignSystemProviderProps) {
   const systemScheme = useColorScheme();
+  const reducedMotion = useReducedMotionSetting();
 
   const resolvedTheme = useMemo(() => {
     if (theme) {
@@ -60,8 +92,9 @@ export function DesignSystemProvider({
       theme: resolvedTheme,
       mode: resolvedTheme.mode,
       colorScheme: theme ? theme.mode : colorScheme,
+      reducedMotion,
     }),
-    [resolvedTheme, theme, colorScheme],
+    [resolvedTheme, theme, colorScheme, reducedMotion],
   );
 
   const content = (

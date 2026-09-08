@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import Svg, { Circle, Line, Path, Polygon, Polyline, Rect } from 'react-native-svg';
 import { useTheme } from '../../theme/useTheme';
-import { resolveTextColor, type TextColorToken } from '../../utils/styles';
+import { isTextColorToken, resolveTextColor } from '../../utils/styles';
 import { icons, type IconShape } from './icons';
 import type { IconProps, IconSize } from './types';
 
@@ -12,23 +12,6 @@ export const iconSizes: Record<IconSize, number> = {
   lg: 24,
   xl: 32,
 };
-
-const colorTokens = new Set<string>([
-  'primary',
-  'secondary',
-  'tertiary',
-  'disabled',
-  'inverse',
-  'brand',
-  'success',
-  'warning',
-  'error',
-  'info',
-]);
-
-function isColorToken(value: string): value is TextColorToken {
-  return colorTokens.has(value);
-}
 
 function renderShape(shape: IconShape, index: number) {
   switch (shape.type) {
@@ -75,7 +58,7 @@ export function Icon({
 }: IconProps) {
   const theme = useTheme();
   const pixelSize = typeof size === 'number' ? size : iconSizes[size];
-  const strokeColor = isColorToken(color) ? resolveTextColor(theme, color) : color;
+  const strokeColor = isTextColorToken(color) ? resolveTextColor(theme, color) : color;
   const shapes = icons[name];
 
   const children = useMemo(() => shapes.map(renderShape), [shapes]);

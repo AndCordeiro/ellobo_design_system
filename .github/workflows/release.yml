@@ -2,12 +2,13 @@ name: Release
 
 # Flow:
 #   1. Every PR adds a changeset (`npm run changeset`).
-#   2. On merge to `main`, this workflow opens/updates the "Version PR"
-#      (chore: release design system) with the new version and CHANGELOG.
-#   3. Merging the Version PR runs the same workflow again: it validates the package,
-#      creates the git tag (vX.Y.Z) and the GitHub Release with the CHANGELOG notes.
+#   2. On merge to `main` with pending changesets, this workflow opens/updates the Version PR
+#      ("chore: release design system") with the new version and CHANGELOG.
+#   3. Merging the Version PR runs the workflow again: no changesets are pending, so it validates
+#      the package, creates the git tag `vX.Y.Z` and the GitHub Release with the CHANGELOG notes.
 #
-# No package registry publish happens here. See README "Publishing to GitHub Packages".
+# Nothing is published to a package registry. See README "Publishing to GitHub Packages".
+# Requires "Allow GitHub Actions to create and approve pull requests" in the repository settings.
 
 on:
   push:
@@ -48,21 +49,42 @@ jobs:
           npm run test -- --ci
           npm run build
 
-      - name: Create Version PR or tag release
+      - name: Create or update the Version PR
         id: changesets
         uses: changesets/action@v1
         with:
           version: npm run version
-          # `changeset tag` only creates the git tag for the current version. The action reads the
-          # "New tag:" output to create the matching GitHub Release from CHANGELOG.md.
-          publish: npx changeset tag
           commit: 'chore: release design system'
           title: 'chore: release design system'
-          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Resolve release version
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create git tag and GitHub Release
+        if: steps.changesets.outputs.hasChangesets == 'false' && steps.version.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          node scripts/release-notes.mjs > release-notes.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$VERSION" -m "v$VERSION"
+          git push origin "v$VERSION"
+          gh release create "v$VERSION" --title "v$VERSION" --notes-file release-notes.md
+
       - name: Summary
         run: |
-          echo "Published: ${{ steps.changesets.outputs.published }}"
-          echo "Has changesets pending: ${{ steps.changesets.outputs.hasChangesets }}"
+          echo "Pending changesets: ${{ steps.changesets.outputs.hasChangesets }}"
+          echo "Version: ${{ steps.version.outputs.version || 'n/a' }} (tag exists: ${{ steps.version.outputs.exists || 'n/a' }})"

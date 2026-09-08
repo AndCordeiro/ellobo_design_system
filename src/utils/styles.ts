@@ -14,6 +14,24 @@ import type {
 /** Color tokens accepted by text-like components. */
 export type TextColorToken = ContentColorToken | FeedbackTone;
 
+const textColorTokens: ReadonlySet<string> = new Set<TextColorToken>([
+  'primary',
+  'secondary',
+  'tertiary',
+  'disabled',
+  'inverse',
+  'brand',
+  'success',
+  'warning',
+  'error',
+  'info',
+]);
+
+/** Type guard used by components that accept either a color token or a raw color string. */
+export function isTextColorToken(value: string): value is TextColorToken {
+  return textColorTokens.has(value);
+}
+
 export function resolveSpacing(theme: DesignSystemTheme, token: SpacingToken | undefined): number {
   return token === undefined ? 0 : theme.spacing[token];
 }

@@ -1,6 +1,1 @@
-export {
-  StatusBadge,
-  getStatusBadgeColors,
-  type StatusBadgeProps,
-  type StatusBadgeVariant,
-} from './StatusBadge';
+export { StatusBadge, type StatusBadgeProps, type StatusBadgeVariant } from './StatusBadge';

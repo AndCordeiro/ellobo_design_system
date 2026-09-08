@@ -50,7 +50,6 @@ export function Avatar({
   const handleError = useCallback(() => setFailedSource(source), [source]);
 
   const initials = fallback ?? (name ? getInitials(name) : '');
-  const showImage = Boolean(source) && !failed;
 
   const containerStyle: ViewStyle = {
     width: dimension,
@@ -70,9 +69,9 @@ export function Avatar({
       style={[containerStyle, style]}
       {...rest}
     >
-      {showImage ? (
+      {source && !failed ? (
         <Image
-          source={source as NonNullable<AvatarProps['source']>}
+          source={source}
           onError={handleError}
           style={{ width: dimension, height: dimension }}
           accessibilityIgnoresInvertColors

@@ -4,7 +4,8 @@ import { Text as RNText } from 'react-native';
 import { DesignSystemProvider } from './DesignSystemProvider';
 import { defaultDarkTheme } from './dark';
 import { defaultLightTheme } from './light';
-import { useTheme, useThemeMode } from './useTheme';
+import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useDesignSystem, useTheme, useThemeMode } from './useTheme';
 
 function wrapperFor(props: Omit<Parameters<typeof DesignSystemProvider>[0], 'children'>) {
   return ({ children }: { children: ReactNode }) => (
@@ -28,6 +29,15 @@ describe('DesignSystemProvider', () => {
 
     const light = renderHook(() => useTheme(), { wrapper: wrapperFor({ colorScheme: 'light' }) });
     expect(light.result.current).toBe(defaultLightTheme);
+  });
+
+  it('exposes the reduce-motion setting through context', () => {
+    const { result } = renderHook(() => useReducedMotion(), { wrapper: wrapperFor({}) });
+    expect(result.current).toBe(false);
+
+    const context = renderHook(() => useDesignSystem(), { wrapper: wrapperFor({}) });
+    expect(context.result.current.reducedMotion).toBe(false);
+    expect(context.result.current.colorScheme).toBe('system');
   });
 
   it('throws a descriptive error outside of the provider', () => {

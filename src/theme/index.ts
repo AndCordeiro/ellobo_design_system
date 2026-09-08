@@ -1,10 +1,8 @@
 export { createTheme } from './createTheme';
 export { defaultLightTheme } from './light';
 export { defaultDarkTheme } from './dark';
-export { createComponentTokens } from './componentTokens';
 export {
   DesignSystemProvider,
-  DesignSystemContext,
   type DesignSystemProviderProps,
   type DesignSystemContextValue,
   type ColorSchemePreference,

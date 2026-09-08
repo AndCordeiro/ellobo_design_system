@@ -1,5 +1,4 @@
 export { Box } from './Box';
-export { getBoxStyle } from './styles';
 export type {
   BoxProps,
   BoxSpacingProps,

@@ -3,7 +3,7 @@ import {
   type ActivityIndicatorProps as RNActivityIndicatorProps,
 } from 'react-native';
 import { useTheme } from '../../theme/useTheme';
-import { resolveTextColor, type TextColorToken } from '../../utils/styles';
+import { isTextColorToken, resolveTextColor, type TextColorToken } from '../../utils/styles';
 
 export type ActivityIndicatorSize = 'sm' | 'md' | 'lg';
 
@@ -15,23 +15,6 @@ export interface ActivityIndicatorProps extends Omit<RNActivityIndicatorProps, '
   size?: ActivityIndicatorSize | number;
   /** Semantic color token. Defaults to `brand`. */
   color?: ActivityIndicatorColor;
-}
-
-const colorTokens = new Set<string>([
-  'primary',
-  'secondary',
-  'tertiary',
-  'disabled',
-  'inverse',
-  'brand',
-  'success',
-  'warning',
-  'error',
-  'info',
-]);
-
-function isColorToken(value: string): value is TextColorToken {
-  return colorTokens.has(value);
 }
 
 const nativeSize: Record<ActivityIndicatorSize, 'small' | 'large'> = {
@@ -53,7 +36,7 @@ export function ActivityIndicator({
   return (
     <RNActivityIndicator
       size={typeof size === 'number' ? size : nativeSize[size]}
-      color={isColorToken(color) ? resolveTextColor(theme, color) : color}
+      color={isTextColorToken(color) ? resolveTextColor(theme, color) : color}
       accessibilityRole="progressbar"
       accessibilityLabel={accessibilityLabel}
       {...rest}
