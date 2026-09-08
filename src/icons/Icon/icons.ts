@@ -215,6 +215,60 @@ export const icons = {
     path('M8.53 16.11a6 6 0 0 1 6.95 0'),
     line(12, 20, 12.01, 20),
   ],
+
+  // Product categories & finance (added for El Lobo products such as Assinaí)
+  tv: [rect(2, 7, 20, 15, 2), polyline('17 2 12 7 7 2')],
+  monitor: [rect(2, 3, 20, 14, 2), line(8, 21, 16, 21), line(12, 17, 12, 21)],
+  music: [path('M9 18V5l12-2v13'), circle(6, 18, 3), circle(18, 16, 3)],
+  cloud: [path('M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z')],
+  'book-open': [
+    path('M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'),
+    path('M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'),
+  ],
+  activity: [polyline('22 12 18 12 15 21 9 3 6 12 2 12')],
+  'file-text': [
+    path('M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'),
+    polyline('14 2 14 8 20 8'),
+    line(16, 13, 8, 13),
+    line(16, 17, 8, 17),
+    polyline('10 9 9 9 8 9'),
+  ],
+  phone: [
+    path(
+      'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z',
+    ),
+  ],
+  'dollar-sign': [line(12, 1, 12, 23), path('M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6')],
+  'play-circle': [circle(12, 12, 10), polygon('10 8 16 12 10 16 10 8')],
+  'trending-up': [polyline('23 6 13.5 15.5 8.5 10.5 1 18'), polyline('17 6 23 6 23 12')],
+  'trending-down': [polyline('23 18 13.5 8.5 8.5 13.5 1 6'), polyline('17 18 23 18 23 12')],
+  'pie-chart': [path('M21.21 15.89A10 10 0 1 1 8 2.83'), path('M22 12A10 10 0 0 0 12 2v10z')],
+  'bar-chart': [line(18, 20, 18, 10), line(12, 20, 12, 4), line(6, 20, 6, 14)],
+  repeat: [
+    polyline('17 1 21 5 17 9'),
+    path('M3 11V9a4 4 0 0 1 4-4h14'),
+    polyline('7 23 3 19 7 15'),
+    path('M21 13v2a4 4 0 0 1-4 4H3'),
+  ],
+  tag: [
+    path('M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z'),
+    line(7, 7, 7.01, 7),
+  ],
+  award: [circle(12, 8, 7), polyline('8.21 13.89 7 23 12 20 17 23 15.79 13.88')],
+  percent: [line(19, 5, 5, 19), circle(6.5, 6.5, 2.5), circle(17.5, 17.5, 2.5)],
+  shield: [path('M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z')],
+  target: [circle(12, 12, 10), circle(12, 12, 6), circle(12, 12, 2)],
+  clipboard: [
+    path('M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'),
+    rect(8, 2, 8, 4, 1),
+  ],
+  gift: [
+    polyline('20 12 20 22 4 22 4 12'),
+    rect(2, 7, 20, 5),
+    line(12, 22, 12, 7),
+    path('M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z'),
+    path('M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z'),
+  ],
 } as const satisfies Record<string, readonly IconShape[]>;
 
 export type IconName = keyof typeof icons;
