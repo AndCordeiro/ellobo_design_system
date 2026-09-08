@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "El Lobo DS",
+    "slug": "ellobo-design-system-example",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "ellobods",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "platforms": ["ios", "android"],
+    "ios": {
+      "bundleIdentifier": "com.ellobo.designsystem.example",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.ellobo.designsystem.example",
+      "edgeToEdgeEnabled": true
+    },
+    "experiments": {
+      "tsconfigPaths": false
+    }
+  }
+}

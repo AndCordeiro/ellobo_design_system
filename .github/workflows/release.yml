@@ -1,0 +1,68 @@
+name: Release
+
+# Flow:
+#   1. Every PR adds a changeset (`npm run changeset`).
+#   2. On merge to `main`, this workflow opens/updates the "Version PR"
+#      (chore: release design system) with the new version and CHANGELOG.
+#   3. Merging the Version PR runs the same workflow again: it validates the package,
+#      creates the git tag (vX.Y.Z) and the GitHub Release with the CHANGELOG notes.
+#
+# No package registry publish happens here. See README "Publishing to GitHub Packages".
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Version PR or GitHub Release
+    runs-on: ubuntu-latest
+    if: github.repository == 'AndCordeiro/ellobo_design_system'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate before any release step
+        run: |
+          npm run typecheck
+          npm run lint
+          npm run test -- --ci
+          npm run build
+
+      - name: Create Version PR or tag release
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: npm run version
+          # `changeset tag` only creates the git tag for the current version. The action reads the
+          # "New tag:" output to create the matching GitHub Release from CHANGELOG.md.
+          publish: npx changeset tag
+          commit: 'chore: release design system'
+          title: 'chore: release design system'
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "Published: ${{ steps.changesets.outputs.published }}"
+          echo "Has changesets pending: ${{ steps.changesets.outputs.hasChangesets }}"

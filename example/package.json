@@ -1,0 +1,32 @@
+{
+  "name": "ellobo-design-system-example",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Component gallery and playground for the El Lobo Design System.",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "export:android": "expo export --platform android --output-dir dist",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "expo prebuild"
+  },
+  "dependencies": {
+    "expo": "~57.0.21",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-svg": "15.15.4",
+    "styled-components": "^6.5.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@types/react": "~19.2.18",
+    "babel-plugin-module-resolver": "^5.0.3",
+    "babel-preset-expo": "~57.0.11",
+    "typescript": "~5.9.3"
+  }
+}

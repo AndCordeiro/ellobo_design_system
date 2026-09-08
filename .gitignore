@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+lib/
+*.tgz
+
+# Tests
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Caches
+.eslintcache
+*.tsbuildinfo
+
+# Example app (Expo)
+example/.expo/
+example/dist/
+example/web-build/
+example/android/
+example/ios/
+example/expo-env.d.ts
