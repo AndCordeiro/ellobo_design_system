@@ -3,4 +3,4 @@
 /**
  * Current version of the El Lobo Design System, mirrored from package.json.
  */
-export const designSystemVersion = '0.2.0';
+export const designSystemVersion = '0.3.0';
