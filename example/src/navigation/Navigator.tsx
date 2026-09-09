@@ -35,6 +35,7 @@ export type RouteParams = {
   PasswordInput: undefined;
   SearchInput: undefined;
   TextArea: undefined;
+  DatePicker: undefined;
   Checkbox: undefined;
   Radio: undefined;
   Switch: undefined;

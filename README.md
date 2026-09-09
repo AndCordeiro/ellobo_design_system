@@ -171,7 +171,7 @@ import {
 | Typography | `Text` (variants), `Heading` (sizes), `Link`                                                                                                             |
 | Icons      | `Icon` (`IconName` union, `iconNames`)                                                                                                                   |
 | Actions    | `Button` (primary/secondary/outline/ghost/danger · sm/md/lg · icons · loading), `IconButton`                                                             |
-| Forms      | `Input`, `PasswordInput`, `SearchInput`, `TextArea`, `Checkbox`, `Radio`/`RadioGroup`, `Switch`, `FormField`, `FormLabel`, `FormError`, `FormHelperText` |
+| Forms      | `Input`, `PasswordInput`, `SearchInput`, `TextArea`, `DatePicker`/`Calendar`, `Checkbox`, `Radio`/`RadioGroup`, `Switch`, `FormField`, `FormLabel`, `FormError`, `FormHelperText` |
 | Display    | `Card`, `PressableCard`, `Avatar`, `Badge`, `Chip`, `Tag`, `ListItem`, `StatusBadge`                                                                     |
 | Feedback   | `ActivityIndicator`, `LoadingOverlay`, `ProgressBar`, `Skeleton`, `Alert`, `EmptyState`, `ErrorState`, `SuccessState`                                    |
 | Overlays   | `Modal`, `Dialog`, `ConfirmDialog`                                                                                                                       |

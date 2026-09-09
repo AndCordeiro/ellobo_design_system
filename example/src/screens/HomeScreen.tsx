@@ -92,6 +92,7 @@ const sections: Section[] = [
         route: 'SearchInput',
       },
       { title: 'Text Area', description: 'Campo multilinha', icon: 'menu', route: 'TextArea' },
+      { title: 'Date Picker', description: 'Calendário em bottom sheet', icon: 'calendar', route: 'DatePicker' },
       { title: 'Checkbox', description: 'Seleção múltipla', icon: 'check', route: 'Checkbox' },
       { title: 'Radio', description: 'Seleção única', icon: 'more', route: 'Radio' },
       { title: 'Switch', description: 'Alternância nativa', icon: 'settings', route: 'Switch' },
