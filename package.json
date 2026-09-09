@@ -1,9 +1,9 @@
 {
   "name": "@ellobo/design-system",
   "version": "0.3.0",
-  "description": "El Lobo Design System \u2014 themeable, accessible React Native component library shared across El Lobo Labs apps.",
+  "description": "El Lobo Design System — themeable, accessible React Native component library shared across El Lobo Labs apps.",
   "license": "MIT",
-  "author": "Andr\u00e9 Cordeiro (https://github.com/AndCordeiro)",
+  "author": "André Cordeiro (https://github.com/AndCordeiro)",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
@@ -79,7 +79,9 @@
     "react-native": ">=0.78.0",
     "react-native-safe-area-context": ">=4.10.0",
     "react-native-svg": ">=15.0.0",
-    "styled-components": ">=6.0.0"
+    "styled-components": ">=6.0.0",
+    "react-native-keyboard-controller": ">=1.16.0",
+    "react-native-reanimated": ">=3.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
@@ -101,8 +103,11 @@
     "react": "19.2.3",
     "react-native": "0.86.3",
     "react-native-builder-bob": "^0.43.1",
+    "react-native-keyboard-controller": "^1.21.9",
+    "react-native-reanimated": "^4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-svg": "15.15.4",
+    "react-native-worklets": "^0.10.1",
     "react-test-renderer": "19.2.3",
     "styled-components": "^6.5.3",
     "typescript": "~5.9.3",

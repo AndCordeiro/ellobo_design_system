@@ -7,6 +7,8 @@ export interface ScrollScreenProps extends ScreenBaseProps {
   /** Defaults to `handled` so taps dismiss the keyboard without swallowing button presses. */
   keyboardShouldPersistTaps?: ScrollViewProps['keyboardShouldPersistTaps'];
   showsVerticalScrollIndicator?: boolean;
+  /** Extra space kept between the focused field and the keyboard/footer. Defaults to `spacing.md`. */
+  keyboardBottomOffset?: number;
   scrollEnabled?: boolean;
   onScroll?: ScrollViewProps['onScroll'];
   /** Escape hatch for any other `ScrollView` prop. */

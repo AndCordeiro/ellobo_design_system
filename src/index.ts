@@ -39,3 +39,4 @@ export * from './overlays';
 
 // Navigation (visual only)
 export * from './navigation';
+export * from './keyboard';

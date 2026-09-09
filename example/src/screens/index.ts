@@ -16,6 +16,7 @@ import { ProgressScreen } from './feedback/ProgressScreen';
 import { SkeletonScreen } from './feedback/SkeletonScreen';
 import { StatesScreen } from './feedback/StatesScreen';
 import { CheckboxScreen } from './forms/CheckboxScreen';
+import { CurrencyInputScreen } from './forms/CurrencyInputScreen';
 import { DatePickerScreen } from './forms/DatePickerScreen';
 import { InputsScreen } from './forms/InputsScreen';
 import { PasswordInputScreen } from './forms/PasswordInputScreen';
@@ -50,6 +51,7 @@ export const screens: ScreenRegistry = {
   SearchInput: SearchInputScreen,
   TextArea: TextAreaScreen,
   DatePicker: DatePickerScreen,
+  CurrencyInput: CurrencyInputScreen,
   Checkbox: CheckboxScreen,
   Radio: RadioScreen,
   Switch: SwitchScreen,
