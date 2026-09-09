@@ -1,5 +1,20 @@
 # @ellobo/design-system
 
+## 0.4.0
+
+### Minor Changes
+
+- b406855: Adds `CurrencyInput`: money field with an ATM-style mask driven by `Intl` (`currency` + `locale`),
+  so the same component renders `59,90` for BRL/pt-BR, `12,345.67` for USD/en-US or `1,234` for
+  JPY. Values are integers in the currency's minor unit. Also exports `formatCurrency`,
+  `formatMinorUnits`, `currencySymbol`, `minorUnitDigits` and `digitsToMinorUnits`.
+
+- b406855: Keyboard handling built in: `Screen`, `ScrollScreen` and `Modal` now use
+  `react-native-keyboard-controller`, so the focused field scrolls into view and footers stick to the
+  keyboard instead of being covered. Apps must add `react-native-keyboard-controller` and
+  `react-native-reanimated` and wrap their root with the exported `KeyboardProvider`.
+  `ScrollScreen` gains `keyboardBottomOffset`.
+
 ## 0.3.0
 
 ### Minor Changes
