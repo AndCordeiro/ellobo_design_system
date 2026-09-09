@@ -1,4 +1,4 @@
-import { DesignSystemProvider, useThemeMode } from '@ellobo/design-system';
+import { DesignSystemProvider, KeyboardProvider, useThemeMode } from '@ellobo/design-system';
 import { StatusBar } from 'expo-status-bar';
 import { Navigator } from './navigation/Navigator';
 import { screens } from './screens';
@@ -28,8 +28,10 @@ function ThemedStatusBar() {
 
 export function App() {
   return (
-    <AppSettingsProvider>
-      <ThemedApp />
-    </AppSettingsProvider>
+    <KeyboardProvider>
+      <AppSettingsProvider>
+        <ThemedApp />
+      </AppSettingsProvider>
+    </KeyboardProvider>
   );
 }

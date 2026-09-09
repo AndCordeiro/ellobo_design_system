@@ -7,6 +7,7 @@ export * from './PasswordInput';
 export * from './SearchInput';
 export * from './TextArea';
 export * from './DatePicker';
+export * from './CurrencyInput';
 export * from './Checkbox';
 export * from './Radio';
 export * from './Switch';

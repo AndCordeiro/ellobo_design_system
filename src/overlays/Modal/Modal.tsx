@@ -1,7 +1,6 @@
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import {
-  KeyboardAvoidingView,
   Modal as RNModal,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -152,11 +151,7 @@ export function Modal({
       animationType={animationType ?? (isBottom ? 'slide' : 'fade')}
       onRequestClose={onClose}
     >
-      <KeyboardAvoidingView
-        style={styles.root}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled={avoidKeyboard}
-      >
+      <KeyboardAvoidingView style={styles.root} behavior="padding" enabled={avoidKeyboard}>
         <Pressable
           accessible={false}
           importantForAccessibility="no"

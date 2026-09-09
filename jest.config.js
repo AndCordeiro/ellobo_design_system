@@ -6,7 +6,7 @@ module.exports = {
   testMatch: ['**/*.test.ts', '**/*.test.tsx'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|react-native-svg|react-native-safe-area-context)/)',
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|react-native-svg|react-native-safe-area-context|react-native-keyboard-controller|react-native-reanimated|react-native-worklets)/)',
   ],
   modulePathIgnorePatterns: ['<rootDir>/lib', '<rootDir>/example'],
   coverageDirectory: '<rootDir>/coverage',

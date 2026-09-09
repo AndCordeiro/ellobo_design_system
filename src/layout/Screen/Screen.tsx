@@ -1,4 +1,5 @@
-import { KeyboardAvoidingView, Platform, View, type ViewStyle } from 'react-native';
+import { View, type ViewStyle } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { LoadingOverlay } from '../../feedback/LoadingOverlay/LoadingOverlay';
 import { useTheme } from '../../theme/useTheme';
 import { ScreenRoot } from './styles';
@@ -8,7 +9,7 @@ const ALL_EDGES: NonNullable<ScreenProps['edges']> = ['top', 'bottom', 'left', '
 
 /**
  * Base structure for a screen: background, safe area, padding, optional header/footer slots,
- * keyboard handling and a loading state. It does not know about any navigation library.
+ * keyboard handling (content and footer move above the keyboard) and a loading state. It does not know about any navigation library.
  *
  * @example
  * <Screen header={<Header title="Perfil" left={<BackButton onPress={goBack} />} />}>
@@ -42,10 +43,7 @@ export function Screen({
   return (
     <ScreenRoot $background={background} edges={edges} {...rest}>
       {keyboardAvoiding ? (
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        >
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
           {body}
         </KeyboardAvoidingView>
       ) : (
