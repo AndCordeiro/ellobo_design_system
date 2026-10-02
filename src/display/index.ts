@@ -3,6 +3,7 @@ export * from './PressableCard';
 export * from './Avatar';
 export * from './Badge';
 export * from './Chip';
+export * from './ColorSwatch';
 export * from './Tag';
 export * from './ListItem';
 export * from './StatusBadge';
