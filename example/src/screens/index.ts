@@ -8,6 +8,7 @@ import { BadgesScreen } from './components/BadgesScreen';
 import { ButtonsScreen } from './components/ButtonsScreen';
 import { CardsScreen } from './components/CardsScreen';
 import { ChipsScreen } from './components/ChipsScreen';
+import { ColorSwatchesScreen } from './components/ColorSwatchesScreen';
 import { IconsScreen } from './components/IconsScreen';
 import { ListItemsScreen } from './components/ListItemsScreen';
 import { AlertScreen } from './feedback/AlertScreen';
@@ -45,6 +46,7 @@ export const screens: ScreenRegistry = {
   Avatars: AvatarsScreen,
   Badges: BadgesScreen,
   Chips: ChipsScreen,
+  ColorSwatches: ColorSwatchesScreen,
   ListItems: ListItemsScreen,
   Inputs: InputsScreen,
   PasswordInput: PasswordInputScreen,

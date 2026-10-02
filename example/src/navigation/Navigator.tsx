@@ -30,6 +30,7 @@ export type RouteParams = {
   Avatars: undefined;
   Badges: undefined;
   Chips: undefined;
+  ColorSwatches: undefined;
   ListItems: undefined;
   Inputs: undefined;
   PasswordInput: undefined;
