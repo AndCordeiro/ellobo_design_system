@@ -68,6 +68,12 @@ const sections: Section[] = [
       { title: 'Badges', description: 'Badge, Tag e StatusBadge', icon: 'bell', route: 'Badges' },
       { title: 'Chips', description: 'Seleção e filtros', icon: 'filter', route: 'Chips' },
       {
+        title: 'Color Swatches',
+        description: 'Seleção de cor',
+        icon: 'target',
+        route: 'ColorSwatches',
+      },
+      {
         title: 'List Items',
         description: 'Linhas de lista e menus',
         icon: 'list',
