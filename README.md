@@ -276,8 +276,10 @@ npm run format          # prettier
 npm run test            # jest
 npm run test:watch
 npm run build           # cleans lib/, syncs src/version.ts, runs bob
-npm run validate        # typecheck + lint + test + build
+npm run validate        # typecheck + lint + format + test + build + example typecheck + pack check
 ```
+
+`validate` also typechecks the example app, so run `npm run example:install` once before it.
 
 ### Build output
 
@@ -333,8 +335,9 @@ contracts, functions) is public API.
    Choose `patch` / `minor` / `major` and write a message useful to consumers
    (e.g. "Adds `SegmentedControl`", "Fixes Button alignment while loading").
 
-3. Run `npm run validate` (typecheck, lint, format check, tests and build). There is no CI,
-   so this is the only gate — run it before opening the Pull Request.
+3. Run `npm run validate` (typecheck, lint, format check, tests, build, example typecheck and
+   `npm pack --dry-run`). There is no CI, so this is the only gate — run it before opening the
+   Pull Request.
 4. Merge to `main`.
 
 Versioning locally (does **not** publish):
@@ -360,9 +363,8 @@ Releases are manual; nothing runs on GitHub Actions. With pending changesets on 
    npm run validate    # any failure aborts the release
    ```
 
-   The changelog generator (`@changesets/changelog-github`) looks up commit and PR links on
-   GitHub, so `GITHUB_TOKEN` must be set in your shell (a token with `read:user` and
-   `repo:status`). Never commit it.
+   The changelog uses the default Changesets generator: entries carry the short commit hash and
+   need no GitHub token.
 
 3. Commit as `chore(release): X.Y.Z`, open the Pull Request and merge it into `main`.
 4. Tag the merge commit on `main` and, optionally, create the GitHub Release with the notes
