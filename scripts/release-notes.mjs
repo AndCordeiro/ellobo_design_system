@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Prints the CHANGELOG.md section of the version declared in package.json.
- * Used by the release workflow to fill the GitHub Release body.
+ * Used when creating the GitHub Release by hand (`gh release create --notes-file`).
  */
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';

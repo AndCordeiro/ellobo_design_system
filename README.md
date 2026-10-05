@@ -10,17 +10,18 @@ and interaction patterns, while owning its own identity (colors, fonts, radius) 
 
 ## Stack
 
-| Concern       | Choice                                        |
-| ------------- | --------------------------------------------- |
-| Runtime       | React Native ≥ 0.78, React ≥ 19               |
-| Styling       | `styled-components/native` + theme tokens     |
-| Icons         | `react-native-svg` (built-in, typed icon set) |
-| Safe area     | `react-native-safe-area-context`              |
-| Language      | TypeScript (strict)                           |
-| Build         | `react-native-builder-bob` (CJS + ESM + d.ts) |
-| Tests         | Jest + React Native Testing Library           |
-| Versioning    | Semantic Versioning managed by Changesets     |
-| CI / Releases | GitHub Actions (`ci.yml`, `release.yml`)      |
+| Concern    | Choice                                        |
+| ---------- | --------------------------------------------- |
+| Runtime    | React Native ≥ 0.78, React ≥ 19               |
+| Styling    | `styled-components/native` + theme tokens     |
+| Icons      | `react-native-svg` (built-in, typed icon set) |
+| Safe area  | `react-native-safe-area-context`              |
+| Language   | TypeScript (strict)                           |
+| Build      | `react-native-builder-bob` (CJS + ESM + d.ts) |
+| Tests      | Jest + React Native Testing Library           |
+| Versioning | Semantic Versioning managed by Changesets     |
+| Validation | Local `npm run validate` (no CI)              |
+| Releases   | Manual: Changesets + annotated git tag        |
 
 The library never depends on Expo. The `example/` app uses Expo only for convenience.
 
@@ -332,7 +333,8 @@ contracts, functions) is public API.
    Choose `patch` / `minor` / `major` and write a message useful to consumers
    (e.g. "Adds `SegmentedControl`", "Fixes Button alignment while loading").
 
-3. Open a Pull Request. `ci.yml` runs typecheck, lint, tests and build.
+3. Run `npm run validate` (typecheck, lint, format check, tests and build). There is no CI,
+   so this is the only gate — run it before opening the Pull Request.
 4. Merge to `main`.
 
 Versioning locally (does **not** publish):
@@ -343,25 +345,37 @@ git diff            # review package.json, CHANGELOG.md, src/version.ts
 ```
 
 `package.json` is the single source of truth for the version: `src/version.ts`
-(`designSystemVersion`) is generated from it and verified by a test and by CI.
+(`designSystemVersion`) is generated from it and verified by a test.
 Avoid `npm version`; use Changesets.
 
-### Version PR and GitHub Releases
+### Releasing
 
-`release.yml` runs on every push to `main`:
+Releases are manual; nothing runs on GitHub Actions. With pending changesets on `main`:
 
-- With pending changesets, it opens or updates the **Version PR**
-  (`chore: release design system`) containing the new version, the updated `CHANGELOG.md` and the
-  consumed changesets. Review it — the version only becomes official after this PR is merged.
-- When the Version PR is merged, the workflow validates the package again
-  (typecheck, lint, test, build), creates the git tag `vX.Y.Z` and the GitHub Release
-  `vX.Y.Z` with the notes extracted from `CHANGELOG.md` (`npm run release:notes`).
-  Any failing validation aborts before tagging.
+1. Create `release/X.Y.Z` from an up-to-date `main`.
+2. Apply the changesets and review the result:
 
-The workflow needs the repository setting **Settings → Actions → General → "Allow GitHub
-Actions to create and approve pull requests"** enabled, otherwise the Version PR cannot be opened.
+   ```bash
+   npm run version     # bumps package.json, updates CHANGELOG.md and src/version.ts
+   npm run validate    # any failure aborts the release
+   ```
 
-Feature merges never create releases by themselves. No automated registry publish is configured.
+   The changelog generator (`@changesets/changelog-github`) looks up commit and PR links on
+   GitHub, so `GITHUB_TOKEN` must be set in your shell (a token with `read:user` and
+   `repo:status`). Never commit it.
+
+3. Commit as `chore(release): X.Y.Z`, open the Pull Request and merge it into `main`.
+4. Tag the merge commit on `main` and, optionally, create the GitHub Release with the notes
+   extracted from `CHANGELOG.md`:
+
+   ```bash
+   git tag -a vX.Y.Z -m "vX.Y.Z"
+   git push origin vX.Y.Z
+   npm run release:notes > release-notes.md
+   gh release create vX.Y.Z --title "vX.Y.Z" --notes-file release-notes.md
+   ```
+
+Feature merges never create releases by themselves. No registry publish is configured.
 
 ### Prereleases and snapshots (future)
 
@@ -388,14 +402,13 @@ available on GitHub Packages (scopes must match the owner). To publish there:
    "publishConfig": { "registry": "https://npm.pkg.github.com" }
    ```
 
-3. In `release.yml`, add `publish: npm run release` to the `changesets/action` step and keep
-   `GITHUB_TOKEN` (it can publish to GitHub Packages for the same repository; a PAT with
-   `write:packages` is only needed for other repositories). The tag/release step can then be
-   removed, since `changeset publish` creates the tag itself.
+3. After the release is merged into `main`, publish with `npm run release` (`changeset publish`)
+   using a token with `write:packages` configured in your user `~/.npmrc`. `changeset publish`
+   creates the `vX.Y.Z` tag itself, so skip the manual `git tag` step.
 4. Consumers add an `.npmrc` with `@andcordeiro:registry=https://npm.pkg.github.com` and a token
    with `read:packages`.
 
-Never commit tokens; use GitHub Secrets and environment variables.
+Never commit tokens; keep them in environment variables or your user-level `~/.npmrc`.
 
 ## Contributing
 
