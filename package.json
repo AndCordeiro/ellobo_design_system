@@ -63,7 +63,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "sync-version": "node scripts/sync-version.mjs",
-    "validate": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build",
+    "validate": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build && npm run example:typecheck && npm pack --dry-run --ignore-scripts",
     "example:install": "npm install --prefix example",
     "example:start": "npm run start --prefix example",
     "example:android": "npm run android --prefix example",
@@ -85,7 +85,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
-    "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.2",
     "@react-native/babel-preset": "0.86.3",
     "@react-native/jest-preset": "^0.86.3",
