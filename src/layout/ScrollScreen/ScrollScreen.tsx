@@ -6,6 +6,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { KeyboardAwareScrollView, KeyboardStickyView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LoadingOverlay } from '../../feedback/LoadingOverlay/LoadingOverlay';
 import { useTheme } from '../../theme/useTheme';
 import { ScreenRoot } from '../Screen/styles';
@@ -39,7 +40,12 @@ export function ScrollScreen({
   ...rest
 }: ScrollScreenProps) {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const [footerHeight, setFooterHeight] = useState(0);
+  // The keyboard height is measured from the screen edge, so it already covers the bottom inset the
+  // root keeps clear (Android navigation bar, home indicator). Without this the footer would float
+  // one inset above the keyboard, leaving a transparent gap with the content showing through.
+  const stickyOffset = { closed: 0, opened: edges.includes('bottom') ? insets.bottom : 0 };
   const contentPadding: ViewStyle = { padding: theme.spacing[padding], flexGrow: 1 };
   const onFooterLayout = (event: LayoutChangeEvent) =>
     setFooterHeight(event.nativeEvent.layout.height);
@@ -71,7 +77,9 @@ export function ScrollScreen({
       )}
       {footer ? (
         keyboardAvoiding ? (
-          <KeyboardStickyView onLayout={onFooterLayout}>{footer}</KeyboardStickyView>
+          <KeyboardStickyView offset={stickyOffset} onLayout={onFooterLayout}>
+            {footer}
+          </KeyboardStickyView>
         ) : (
           footer
         )
